@@ -1,0 +1,32 @@
+[ 
+	{
+		"model": "Insidious",
+		"price": 12.55,
+		"image": "/images/insidious.jpg",
+		"qty_available": 50
+	},
+	{
+		"model": "Conjuring",
+		"price": 29.99,
+		"image": "/images/conjuring.jpg",
+		"qty_available": 30
+	},
+    {
+		"model": "Prey For The Devil",
+		"price": 15.33,
+		"image": "/images/prey.jpg",
+		"qty_available": 30
+	},
+    {
+		"model": "Talk To Me",
+		"price": 6.66,
+		"image": "/images/talk.jpg",
+		"qty_available": 30
+	},
+    {
+		"model": "Horror Movie Collection",
+		"price": 130.33,
+		"image": "/images/collection.jpg",
+		"qty_available": 30
+	}
+]
