@@ -1,5 +1,4 @@
-
-// Importing the Express.js framework 
+// start of section 1 Importing the Express.js framework 
 const express = require('express');
 // Create an instance of the Express application called "app"
 // app will be used to define routes, handle requests, etc
@@ -27,13 +26,15 @@ app.get('/products.js', function(request, response, next) {
 // insert process form and insert app.post 
 app.post("/process_form", function (request, response) {
     let receipt = '';
+    console.log(request.body);
     let qtys = request.body[`quantity_textbox`];
-    console.log(qtys);
+
+    console.log(request.body);
     for (let i in qtys) {
         let q = Number(qtys[i]);
         console.log("the quantity value is "+q);
         let validationMessage = validateQuantity(q);
-        let brand = products[i]['brand'];
+        let model = products[i]['model'];
         let brand_price = products[i]['price'];
         if (validateQuantity(q)==="") {
             products[i]['total_sold'] += Number(q);

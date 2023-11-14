@@ -1,10 +1,9 @@
-
 /* General */
 body {
-    width: 800px;
+    width: 900px;
     margin: 0 auto;
     background: url("images/background_grey.jpg");
-} 
+}  
 
 /* Typography */
 h1, h2 {
@@ -23,9 +22,15 @@ h1, h2 {
 
 /* Styling the products display */
 .item img {
-    width: 200px;
-    height:200px;
+    width: 100px;
+    height:100px;
 }
+
+.store_img{
+  width: 200px;
+  height:200px;
+}
+
 
 /*the following is for the header and footer table per lab5 part 7*/
 .large-text {
@@ -85,3 +90,11 @@ td {
 .purchase-btn:hover {
   background-color: #b300a4;
 }
+.errorBox {
+  width: 100%; 
+  height: 40px; 
+  margin-top: 5px;
+  color: #ff2e2e;
+  padding-top: 3px;
+  line-height: 95%;
+} 

@@ -13,16 +13,15 @@ if (error) {
 // Select the div where product details should be displayed
 let productDetailsDiv = document.getElementById('productDetails');
 // Display the first product's details
-productDetailsDiv.innerHTML = `<h3>${products[0]["brand"]} at \$${products[0]["price"]}</h3>`;
+productDetailsDiv.innerHTML = `<h3>${products[0]["model"]} at \$${products[0]["price"]}</h3>`;
 
 //select div where the product list will be deployed
 let productListDiv=document.getElementById('productList');
 // iterate through the products and display their sold counts
 for (let i in products) {
-    productListDiv.innerHTML +=`<h4>${products[i]["total_sold"]} ${products[i]["brand"]} have been sold!</h4>`;
+    productListDiv.innerHTML +=`<h4>${products[i]["total_sold"]} ${products[i]["model"]} have been sold!</h4>`;
 }
 */
-
 
 // Fetch the query string parameters
 const params = new URL(document.location).searchParams;
@@ -32,30 +31,31 @@ let error = params.get('error');
 if (error){
     alert(error);
 }
-//select the div where the product details should be displayed 
-let productDetailsDiv = document.getElementById('productDetails');
 
-//display the first products details
-productDetailsDiv.innerHTML = `<h3>${products[0]["brand"]} at \$${products[0]["price"]}</h3>`;
+console.log(q)
+// //select the div where the product details should be displayed 
+// let productDetailsDiv = document.getElementById('productDetails');
 
-//select div where the product list will be deployed 
-let productListDiv=document.getElementById('productList');
-// iterate through the products and display their sold counts
-for (let i in products){
-    productListDiv.innerHTML +=`<h4>${products[i]["total_sold"]}${products[i]["brand"]} have been sold </h4>`;
+// //display the first products details
+// productDetailsDiv.innerHTML = `<h3>${products[0]["model"]} at \$${products[0]["price"]}</h3>`;
 
-}
+// //select div where the product list will be deployed 
+// let productListDiv=document.getElementById('productList');
+// iterate through the products and display their sold counts --- Professor said to change this part 
+// for (let i in products){
+//     productListDiv.innerHTML +=`<h4>${products[i]["total_sold"]}${products[i]["model"]} have been sold </h4>`;
+
+// }
 // Loop through the expected quantity parameters and update the quantity array
-
 let quantity=[];
 
-for (let i = 0; i < itemData.length; i++) {
+for (let i = 0; i < products.length; i++) {
     let quantityValue = params.get(`quantity${i}`);
+    console.log(quantityValue)
     if (quantityValue !== null) {
-        quantity[itemData[i].quantityIndex] = Number(quantityValue);
+        quantity[i] = Number(quantityValue);
     }
 }
-
 
 //initialize variables for subtotal, tax, shipping charge, and total
 let subtotal=0;
@@ -89,7 +89,7 @@ document.getElementById('shipping_cell').innerHTML = '$' +shippingCharge.toFixed
 //there are many ways to code the validateQuantity function... here is one.
 function validateQuantity(quantity) {
   let errorMessage = "";
-
+    quantity = Number(quantity);
   switch (true) {
       case isNaN(quantity):
           errorMessage = "Not a number. Please enter a non-negative quantity to order.";
@@ -121,20 +121,20 @@ function generateItemRows() {
   
     // Initialize variable to keep track of errors
     let hasErrors = false;
-  
-    // Loop through the itemData and quantity arrays
-    for (let i = 0; i < itemData.length; i++) {
-      let item = itemData[i];
-      let itemQuantity = quantity[item.quantityIndex];
-  
+    console.log(quantity)
+    // Loop through the products and quantity arrays
+    for (let i = 0; i < products.length; i++) {
+      let item = products[i];
+      let itemQuantity = quantity[i];
+        console.log(i);
       // Validate the quantity
       let validationMessage = validateQuantity(itemQuantity);
-  
+        console.log(validationMessage);
       // If there are validation errors, display the item with an error message
       if (validationMessage !== "") {
         hasErrors = true;
         let row = table.insertRow();
-        row.insertCell(0).innerHTML = item.brand;
+        row.insertCell(0).innerHTML = item.model;
         row.insertCell(1).innerHTML = validationMessage;
         row.insertCell(2).innerHTML ="";
         row.insertCell(2).innerHTML = "";
@@ -145,7 +145,7 @@ function generateItemRows() {
   
         // Display the item with the calculated extended price
         let row = table.insertRow();
-        row.insertCell(0).innerHTML = item.brand;
+        row.insertCell(0).innerHTML = item.model;
         row.insertCell(1).innerHTML = itemQuantity;
         row.insertCell(2).innerHTML = '$' + item.price.toFixed(2);
         row.insertCell(3).innerHTML = '$' + extendedPrice.toFixed(2);
