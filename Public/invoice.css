@@ -1,16 +1,19 @@
-/* how the table is formatted  */
+/* I inported the font from GoogleFonts.com that matches the scary theme*/
+@import url('https://fonts.googleapis.com/css2?family=Creepster&display=swap');
+
+/* How the table is formatted (Store 1/Poke12) */
 table {
     border-collapse: collapse;
     width: 65%;
     }
-    /* border of table */
+    /* Border of table */
     table, td {
     border:1px solid black;
     margin-left: auto;
       margin-right: auto;
     
     }
-    /* table header and the table text should align to the left of the invoice  */
+    /* Table header and the table text should align to the left of the invoice  */
     th, td {
         padding: 8px;
         text-align: left;
@@ -20,20 +23,21 @@ table {
         font-size: 22px;
         border: 3px double orange;
     }
-    /* when there is the footer including the tax, shipping, and total it will be bolded */
+    /* When there is the footer including the tax, shipping, and total it will be bolded */
     tfoot{
         font-weight: bold;
     }
-    /* background of the webpage */
+    /* Background of the webpage */
     body {
         background-color: rgb(226, 195, 255);
     }
-    /* i do not think i need this */
-    .errorBox {
-        width: 100%; 
-        height: 40px; 
-        margin-top: 5px;
-        color: #ff2e2e;
-        padding-top: 3px;
-        line-height: 95%;
-    }
+/* inserted the font from GoogleFonts so that everything in the body of the html will be this font */
+    body {
+        font-family: "Creepster", sans-serif;
+    }  
+/* after naming the image, i put the name in here so i can edit the size to fit the page better */
+    .img-invoice{
+        width: 80px;
+        height: 80px;
+      }
+      

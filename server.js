@@ -1,82 +1,121 @@
-// start of section 1 Importing the Express.js framework 
+//Aaron Kim
+// Importing the Express.js framework 
 const express = require('express');
 // Create an instance of the Express application called "app"
 // app will be used to define routes, handle requests, etc
 const app = express();
 
-// Route all other GET requests to serve static files from a directory named "public"
+app.use(express.urlencoded({ extended: true }));
+
+//grabs everything from public
 app.use(express.static(__dirname + '/public'));
 
-const products = require(__dirname + "/products.json");
+//sets up the product array from the json file
+let products = require(__dirname + '/products.json');
+products.forEach( (prod,i) => {prod.total_sold = 0});
 
 // Define a route for handling a GET request to a path that matches "./products.js"
-app.get('/products.js', function(request, response, next) {
-	// Send the response as JS
-	response.type('.js');
-	
-	// Create a JS string (products_str) that contains data loaded from the products.json file
-	// Convert the JS string into a JSON string and embed it within variable products
-	const products_str = `let products = ${JSON.stringify(products)};`;
-
-	// console.log(products)
-	// Send the string in response to the GET request
-	response.send(products_str);
+app.get("/products.js", function (request, response, next) {
+    response.type('.js');
+    let products_str = `var products = ${JSON.stringify(products)};`;
+    //console.log(products_str);
+    response.send(products_str);
 });
 
-// insert process form and insert app.post 
-app.post("/process_form", function (request, response) {
-    let receipt = '';
-    console.log(request.body);
-    let qtys = request.body[`quantity_textbox`];
+//whenever a post with proccess form is recieved
+app.post("/process_purchase", function (request, response) {
 
-    console.log(request.body);
-    for (let i in qtys) {
+    //get the textbox inputs in an array
+    let qtys = request.body[`quantity_textbox`];
+    //initially set the valid check to true
+    let valid = true;
+    //instantiate an empty string to hold the url
+    let url = '';
+    let soldArray =[];
+
+    //for each member of qtys
+    for (i in qtys) {
+        
+        //set q as the number
         let q = Number(qtys[i]);
-        console.log("the quantity value is "+q);
-        let validationMessage = validateQuantity(q);
-        let model = products[i]['model'];
-        let brand_price = products[i]['price'];
-        if (validateQuantity(q)==="") {
-            products[i]['total_sold'] += Number(q);
-            receipt += `<h3>Thank you for purchasing: ${q} ${brand}. Your total is \$${q * brand_price}!</h3>`; // render template string
-        } else {
-            receipt += `<h3><font color="red">${q} is not a valid quantity for ${brand}!<br>${validationMessage}</font></h3>`;
+        
+        //console.log(validateQuantity(q));
+        //if the validate quantity string is empty
+        if (validateQuantity(q)=='') {
+            //check if we will go into the negative if we buy this, set valid to false if so
+            if(products[i]['qty_available'] - Number(q) < 0){
+                valid = false;
+                url += `&prod${i}=${q}`
+            }
+            // otherwise, add to total sold, and subtract from available
+            else{
+               
+                soldArray[i] = Number(q);
+                
+                //add argument to url
+                url += `&prod${i}=${q}`
+            }
+            
+            
+        }
+        //if the validate quantity string has stuff in it, set valid to false
+         else {
+            
+            valid = false;
+            url += `&prod${i}=${q}`
+        }
+        //check if no products were bought, set valid to false if so
+        if(url == `&prod0=0&prod1=0&prod2=0&prod3=0&prod4=0&prod5=0`){
+            valid = false
         }
     }
-    response.send(receipt);
-    response.end();
-
-});
-function validateQuantity(quantity) {
-    let errorMessage = "";
-  
-    switch (true) {
-        case isNaN(quantity):
-            errorMessage = "Not a number. Please enter a non-negative quantity to order.";
-            break;
-        case quantity < 0 && !Number.isInteger(quantity):
-            errorMessage = "Negative inventory and not an Integer. Please enter a non-negative quantity to order.";
-            break;
-        case quantity < 0:
-            errorMessage = "Negative inventory. Please enter a non-negative quantity to order.";
-            break;
-        case !Number.isInteger(quantity):
-            errorMessage = "Not an Integer. Please enter a non-negative quantity to order.";
-            break;
-        default:
-            errorMessage = ""; // No errors
-            break;
+    //if its false, return to the store with error=true
+    if(valid == false)
+    {
+       
+        response.redirect(`products_display.html?error=true` + url);
+        
+        
     }
-  
-    return errorMessage;
-}
+    //otherwise, redirect to the invoice with the url attached
+    else{
 
-// Monitor all requests regardless of their method (GET, POST, PUT, etc) and their path (URL)
+         for (i in qtys)
+        {
+            //update total and qty only if everything is good
+            products[i]['total_sold'] += soldArray[i];
+            products[i]['qty_available'] -= soldArray[i];
+        }
+        
+        response.redirect('invoice.html?' + url);
+        
+    }
+ });
+
+// Route all other GET requests to serve static files from a directory named "public"
+
 app.all('*', function (request, response, next) {
-   console.log(request.method + ' to ' + request.path);
-   next();
-});
+    //console.log(request.method + ' to ' + request.path);
+    next();
+ });
+
+//function to validate the quantity, returns a string if not a number, negative, not an integer, or a combination of both
+//if no errors in quantity, returns empty string
+function validateQuantity(quantity){
+    //console.log(quantity);
+    if(isNaN(quantity)){
+        return "Not a Number";
+    }else if (quantity<0 && !Number.isInteger(quantity)){
+        return "Negative Inventory & Not an Integer";
+    }else if (quantity <0){
+        return "Negative Inventory";
+    }else if(!Number.isInteger(quantity)){
+        return "Not an Integer";
+    }else{
+        return"";
+    }
+
+}
 
 // Start the server; listen on port 8080 for incoming HTTP requests
 app.listen(8080, () => console.log(`listening on port 8080`));
-

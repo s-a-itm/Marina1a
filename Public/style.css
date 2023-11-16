@@ -10,8 +10,7 @@ body {
 /* Typography for headers*/
 h1, h2 {
     text-align: center;
-    color: rgb(133, 1, 167);
-
+    color: rgb(197, 0, 0);
 }
 
 /* Block Styling, i do not think this does anything */

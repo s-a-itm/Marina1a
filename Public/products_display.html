@@ -51,9 +51,11 @@
 <div class="container">
   <br>
   <br>
+  <div id="errorDiv" class= "errorDiv">
+    <br>
   <h3 id="errMsg" style="color: #ff2e2e;"></h3>
   <br>
-  
+  </div>
 <body>
   <!-- If you select the purchase button, it will GET the invoice to the receipt-->
   <!-- <form action="./invoice.html" method="GET"> -->
@@ -64,9 +66,10 @@
         <h3 id="errMsg" style="color: #ff2e2e;"></h3>
         <br> -->
         <!-- PRODUCT CARDS-->
-        <form action="/process_form" method="POST" name="qty_form" class="qty_form">
+        <form action="/process_purchase" method="POST" name="qty_form" class="qty_form">
             <div class="row"></div>
             <input type="submit" value="Purchase" class="purchase-btn">
+      </form>
     </div>
     <br>
     <br>
@@ -102,56 +105,3 @@
 <!-- <script src="/products.js"></script> -->
 <script src="products_display_assign1.js"></script>
 </html>
-<!-- end of section 1  -->
-
-<!-- <!DOCTYPE html>
-<head>
-    <title>Marina's Spooky Store</title>
-    <p style="text-align: center; font-weight: bold;">
-    </p>
-    <link rel="stylesheet" type="text/css" href="assign1.css">
-  
-    <h1>
-        <span class="large-text" id="first_name_span"></span>
-        <span class="italic-text" id="last_name_span"></span><br>
-    </h1>
-</head>
-<body>
-    
-    <h1><span id="top_title"></span></h1>
-    <div>
-        <main class="main">
-    </div>
-    
-</body>
-<footer>
-    <span id="bottom_title"></span>
-</footer>
-</html> -->
-
-<!-- <!DOCTYPE html>
-<html lang="en">
-<head>
-  <title>Marina's Spooky Store</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="assign1.css">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-</head>
-<body>
-
-<div class="container-fluid">
-  <h1>Marina's Spooky Store!</h1>
-  <p>Resize the browser window to see the effect.</p>
-  <p>The columns will automatically stack on top of each other when the screen is less than 768px wide.</p>
-  <div class="row">
-    <div class="col-sm-4" style="background-color:rgb(169, 17, 235);"> Screamin Marshmellows</div>
-    <div class="col-sm-4" style="background-color:rgb(248, 116, 0);">.col-sm-4</div>
-    <div class="col-sm-4" style="background-color:rgb(9, 175, 51) 250, 235;">.col-sm-4</div>
-  </div>
-</div>
-
-</body>
-</html> -->
