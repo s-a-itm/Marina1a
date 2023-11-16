@@ -4,25 +4,18 @@
 <head>
   <title>Marina's Horror Movie Store</title>
   <meta charset="utf-8">
+  <!-- inserting bootstrap 4 to the display html with formatting and navigation bar-->
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.slim.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script> -->
-   <!-- Taken from Bootstrap 4 and delivered in the .css and .js files for the formatting of the webpage -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Creepster&family=Open+Sans:wght@300&family=Oswald:wght@200&display=swap" rel="stylesheet">
-<!-- link the .css and style sheet as well as the products.js that links to the .json -->
+<!-- link to the css and the json to get the products out of  -->
     <link rel="stylesheet" type="text/css" href="style.css">
   <script type="text/javascript" src="./products.js"></script>
 </head>
 <body>
-<!-- this is the header of the top of the webpage that has been pasted from bootstrap 4 -->
+<!-- This is the header to the webpage that has been pasted from bootstrap 4 -->
 <div class="jumbotron text-center" style="margin-bottom:0">
   <h1>Marina's Horror Movie Store</h1>
   <p> Purchase a great horror movie for a late night movie night!</p> 
@@ -47,27 +40,21 @@
     </ul>
   </div>  
 </nav>
-<!-- error message will display as red -->
+<!-- The eror message will display as red. Line 49 was referenced from Professor Sal -->
 <div class="container">
   <br>
   <br>
+  <!-- create an errorDiv so it can be transfered to the error messaging systems  -->
   <div id="errorDiv" class= "errorDiv">
     <br>
   <h3 id="errMsg" style="color: #ff2e2e;"></h3>
   <br>
   </div>
 <body>
-  <!-- If you select the purchase button, it will GET the invoice to the receipt-->
-  <!-- <form action="./invoice.html" method="GET"> -->
-    <!-- <form action="/process_purchase" method="POST" name="qty_form" class="qty_form"> -->
-      <!-- <div class="container">
-        <br>
-        <br>
-        <h3 id="errMsg" style="color: #ff2e2e;"></h3>
-        <br> -->
-        <!-- PRODUCT CARDS-->
+<!-- this links to the form from the server.js, we have a POST becuase it is sending from the .json file so it updates it dynamically to quantity and others. This is not like a GET because the GET was just getting the informatoin from a public file.  -->
         <form action="/process_purchase" method="POST" name="qty_form" class="qty_form">
             <div class="row"></div>
+          <!-- inserting the purchase button, declaring the name so I can do it over css-->
             <input type="submit" value="Purchase" class="purchase-btn">
       </form>
     </div>
@@ -78,30 +65,10 @@
           <main class="main"></main>
     </div>
     <footer>
-        <!-- <input type="submit" value="Purchase" class="purchase-btn"> -->
-                <!-- Your products will be appended here via JS -->
-                <!-- <div class="container">
-
-                    <div class="row">
-                        Your JavaScript-generated product items will go here -->
-                        <!-- <main class="main"></main> -->
-                    <!-- <div class="row">
-                        <div class="col"></div>
-                        <div class="col"></div>
-                        <div class="col"></div>
-                      </div>
-                </div>
-                </div>
-            </main>
-        </div> -->
-        <!-- <footer>
-            <input type="submit" value="Purchase" class="purchase-btn">
-        </footer> -->
     </form>
 </body>
 <footer>
     <span id="bottom_title"></span>
 </footer>
-<!-- <script src="/products.js"></script> -->
 <script src="products_display_assign1.js"></script>
 </html>

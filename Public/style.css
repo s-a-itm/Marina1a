@@ -1,3 +1,4 @@
+/* importing the font from Google fonts */
 @import url('https://fonts.googleapis.com/css2?family=Creepster&display=swap');
 
 /* background to the webpage and how much it takes up the webpage */
@@ -26,7 +27,7 @@ body > div {
     display: flex;
 }
   
-/* pictures  */
+/* How big pictures are in the products display website  */
   .name-img{
   
     width: 250px;
@@ -37,26 +38,10 @@ body > div {
     width: 60px;
     height: 60px;
   }
-  
-  /* .btn-outline-primary {
-    
-      color: #ff0000;
-      background-color: #000000;
-      border-color: #000000;
-  
-  }
-  
-  .btn-outline-primary:hover {
-    background-color: #ff2020;
-    border-color: #ff2e2e;
-    color: #000000;
-  } */
-
   .container img {
-    /*object-fit: contain;*/
     object-fit: cover; 
   } 
-  /* this creates the purchase button, where it is on the webpage, how big, and the color that is static */
+  /* this creates the purchase button, where it is on the webpage, how big, and the color */
   .purchase-btn {
     display: block;
     width: 200px;

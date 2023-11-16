@@ -1,31 +1,30 @@
-//initializes variables from Justin Wang
+//initializing variables. My code was not working until I foud I was not initlization or declairing variables. Lines 2-6 is referenced from collaboration on Monday 11/13 with Justin Wang and Ethan Swartz.
 let extendedPrices = [];
-let extendedPrice = 0;
-let subtotal = 0;
 let taxAmount = 0;
 let shipping = 0;
+let extendedPrice = 0;
+let subtotal = 0;
 
-// Fetch the query string parameters
+// Fetching the query string parameters
 let params = (new URL(document.location)).searchParams;
-        //initializes empty order array
-        let order = [];
-        //for each prod, push the value to the array
+        //initializes empty quantity array that was defined above so it knows to start at nothing instead of pre-picked arrays 
+        let quantity = [];
+        //for each 'prod', push the value to the array
         params.forEach((value,key) => {
             if (key.startsWith('prod')) {
-                    order.push(parseInt(value));
+                    quantity.push(parseInt(value));
                 }
         });        
         
-//generates all the item rows
+//Generates all the item rows so display on teh webpage and also take in calculations
 generateItemRows();
 
-// calculate subtotal and tax
-
+//Calculate subtotal and tax
  let tax = (subtotal*0.0575);
 
 //checks the shipping price
 if(subtotal <= 50)
-{
+{  
     shipping = 2;
 }else if(subtotal <=100)
 {
@@ -36,23 +35,24 @@ else{
 }
 
 //calculates total
-let total = tax+subtotal+shipping;
+let total = tax+ subtotal+ shipping;
 
 
-//insert footer row 
+//This is generating the footer rows copied from Store1/Poke12
 document.getElementById("subtotal_cell").innerHTML = "$" + subtotal.toFixed(2);
 document.getElementById("tax_cell").innerHTML = "$" + tax.toFixed(2);
 document.getElementById("shipping_cell").innerHTML = "$"+shipping.toFixed(2);
 document.getElementById("total_cell").innerHTML = "$"+total.toFixed(2);
 
-
-//function to validate the quantity, returns a string if not a number, negative, not an integer, or a combination of both
-//if no errors in quantity, returns empty string
+//function to validate the quantity, returns a string if not a number, negative, not an integer, or a combination of both, this was done in a video for Store1/Poke12 so lines 50-63 are referenced by Professor Sal 
 function validateQuantity(quantity){
+    // if it is not a number it will display the error message
     if(isNaN(quantity)){
         return "Please Enter a Number";
+// If the quantity is a decimal it will display the error message
     }else if (quantity<0 && !Number.isInteger(quantity)){
         return "Please Enter a Positive Integer";
+    // if the quantity is negative it will display the error message
     }else if (quantity <0){
         return "Please Enter a Positive Number";
     }else if(!Number.isInteger(quantity)){
@@ -65,37 +65,36 @@ function validateQuantity(quantity){
 //generates all the item rows
 function generateItemRows(){
 
-    //sets table to the invoice table on the html
+//sets table to the invoice table on the html
     let table = document.getElementById("invoiceTable");
 
-    //checks if it has errors, set it to no for now
+//Defined this to see if it has errors it will therefore not work
     let hasErrors = false; 
 
-    //for each member of the array
+    //for each Member of the array is a for loopthat lets all products be drawn in from the quantity
     for(let i=0;i<products.length;i++){
         
-        //sets item and itemQuantity from the products array, and the array gotten from the url
+    //Sets item and itemQuantity from the products array, and the array gotten from the url: Lines 79-80 referenced from Aaron Kim
         let item = products[i];
-        let itemQuantity = order[i];
+        let itemQuantity = quantity[i];
         
-        //validate the quantity, we are just kinda looking for if its negative so we dont show it
+    //Validate the quantity
         let validationMessage = validateQuantity(itemQuantity);
         
-        
-        //if there is an error, just ignore this 
+        //if there is an error, it will ignore this below. It is checking the validation if it is true or false
         if(validationMessage !== ""){
             hasErrors = true;
             let row =table.insertRow();
             row.insertCell(0).insertHTML = item.model;
             row.insertCell(1).innerHTML = validationMessage;
         } 
-        //otherwise, lets create the row in the invoice and update the extended price and subtotal
+        //Depending on the output, it will create the row in the invoice and update the extended price and subtotal
         else if(itemQuantity >0){
-            //update the variables
+            //Update the variables in the table
             extendedPrice = item.price * itemQuantity;
             subtotal += extendedPrice;
 
-            //create a new row and insert the info
+            //Create a new row and generates the info that is the image, the name, quantity, the price, then the total of the entire quantity based on quantity
             let row = table.insertRow();
             row.insertCell(0).innerHTML = `<img src="${item.image}" class="img-invoice" name = "img">`;
             row.insertCell(1).innerHTML = item.model;
@@ -104,7 +103,5 @@ function generateItemRows(){
             row.insertCell(4).innerHTML = "$"+extendedPrice.toFixed(2);
 
         }
-
     }
-
 }

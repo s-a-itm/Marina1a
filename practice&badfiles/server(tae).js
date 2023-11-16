@@ -84,8 +84,6 @@ app.all('*', function (request, response, next) {
     }
   });
 
-
-
 // Validate Quantity
 function validateQuantity(quantity, maxQuantity) {
     let errorMessage = "";

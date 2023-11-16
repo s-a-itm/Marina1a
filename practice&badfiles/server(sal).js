@@ -67,10 +67,10 @@ app.post("/process_form", function (request, response) {
 });
 
     //if all input boxes are empty there will be no errors detectd
-// if (has_qty == false && Object.keys(errorObject).length == 0){
-//     //redirect to the products page with an 'error parameter in the url
-//     response.redirect('./products.html?error');
-// }
+if (has_qty == false && Object.keys(errorObject).length == 0){
+    //redirect to the products page with an 'error parameter in the url
+    response.redirect('./products.html?error');
+}
 
 //if there is an input and there are no errors
 else if (has_qty == true && Object.keys(errorObject).length == 0){

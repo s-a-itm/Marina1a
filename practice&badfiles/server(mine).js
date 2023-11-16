@@ -34,8 +34,7 @@ console.log(products)
 app.post("/process_form", function (request, response) {
     let receipt = '';
     console.log(request.body);
-    // let qtys = request.body[`quantity_textbox`];
-    let qtys = request.body[`quantity`];
+    let qtys = request.body[`quantity_textbox`];
 
 
     console.log(request.body);
