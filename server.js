@@ -1,13 +1,14 @@
-//Aaron Kim
+// Server.js is mostly compiled from  from the Lualima Assignment 1 instructions and Professor Sal's Video
 // Importing the Express.js framework 
 const express = require('express');
 // Create an instance of the Express application called "app"
 // app will be used to define routes, handle requests, etc
 const app = express();
 
+// referenced from Professor Sal's video 
 app.use(express.urlencoded({ extended: true }));
 
-//grabs everything from public
+// Route all other GET requests to serve static files from a directory named "public"
 app.use(express.static(__dirname + '/public'));
 
 //sets up the product array from the json file
@@ -17,59 +18,59 @@ products.forEach( (prod,i) => {prod.total_sold = 0});
 // Define a route for handling a GET request to a path that matches "./products.js"
 app.get("/products.js", function (request, response, next) {
     response.type('.js');
-    let products_str = `var products = ${JSON.stringify(products)};`;
-    //console.log(products_str);
+// Convert the JS string into a JSON string and embed it within variable products
+    let products_str = `let products = ${JSON.stringify(products)};`;
     response.send(products_str);
 });
 
-//whenever a post with proccess form is recieved
+//Copied from Laulima. This is naming the products.json file to be posting the process_purchase 
 app.post("/process_purchase", function (request, response) {
 
-    //get the textbox inputs in an array
+    //Referenced from Aaron Kim: Textboxs in the array
     let qtys = request.body[`quantity_textbox`];
-    //initially set the valid check to true
+
+    //Set the valididy check to automatically true 
     let valid = true;
-    //instantiate an empty string to hold the url
+
+    //This is an empty string so the url will go in it 
     let url = '';
     let soldArray =[];
 
-    //for each member of qtys
+    //// Iterate through elements in the array 'qtys'
     for (i in qtys) {
         
-        //set q as the number
+        //Set q as the number
         let q = Number(qtys[i]);
         
-        //console.log(validateQuantity(q));
-        //if the validate quantity string is empty
+        // The code validates user-entered quantities for purchase against available stock. It updates data structures and flags based on the validation results        
         if (validateQuantity(q)=='') {
-            //check if we will go into the negative if we buy this, set valid to false if so
             if(products[i]['qty_available'] - Number(q) < 0){
                 valid = false;
                 url += `&prod${i}=${q}`
             }
-            // otherwise, add to total sold, and subtract from available
+            // If above does not execute, then calculate sold, and subtract from available quantity 
             else{
                
                 soldArray[i] = Number(q);
                 
-                //add argument to url
+                //adding to url 
                 url += `&prod${i}=${q}`
             }
             
             
         }
-        //if the validate quantity string has stuff in it, set valid to false
-         else {
+        // This part of the code flags as invalid any unsuccessful attempts to buy products or when no products are selected for purchase
+        else {
             
             valid = false;
             url += `&prod${i}=${q}`
         }
-        //check if no products were bought, set valid to false if so
+        //If no products were bought, set valid to false. The url will display as followed. 
         if(url == `&prod0=0&prod1=0&prod2=0&prod3=0&prod4=0&prod5=0`){
             valid = false
         }
     }
-    //if its false, return to the store with error=true
+    // This code redirects users to a page indicating an error in the purchase attempt if the 'valid' flag is set to 'false', passing along additional information through URL parameters
     if(valid == false)
     {
        
@@ -77,12 +78,12 @@ app.post("/process_purchase", function (request, response) {
         
         
     }
-    //otherwise, redirect to the invoice with the url attached
+    //If it does not it will redirect to the invoice with the url attached
     else{
 
          for (i in qtys)
         {
-            //update total and qty only if everything is good
+            //Update total and qty only if there are no errors
             products[i]['total_sold'] += soldArray[i];
             products[i]['qty_available'] -= soldArray[i];
         }
@@ -93,7 +94,6 @@ app.post("/process_purchase", function (request, response) {
  });
 
 // Route all other GET requests to serve static files from a directory named "public"
-
 app.all('*', function (request, response, next) {
     //console.log(request.method + ' to ' + request.path);
     next();
