@@ -9,7 +9,7 @@ const app = express();
 app.use(express.urlencoded({ extended: true }));
 
 // Route all other GET requests to serve static files from a directory named "public"
-app.use(express.static(__dirname + '/public'));
+app.use(express.static(__dirname + '/Public'));
 
 //sets up the product array from the json file
 let products = require(__dirname + '/products.json');
